@@ -1,2 +1,2 @@
 # DevOps-Projects
-The repository contains beginner friendly DevOps projects
+This repository contains beginner friendly DevOps projects
