@@ -224,6 +224,54 @@ You should see somthing like this:
 
 ## Step 6 - Enabling PHP on the website 
 
+With the default DirectoryIndex settings on Apache, a file named index.html will always take precedence over an index.php file.In case you want to change this behavior, you’ll need to edit the /etc/apache2/mods-enabled/dir.conf file and change the order in which the index.php file is listed within the DirectoryIndex directive:
+
+`sudo vim /etc/apache2/mods-enabled/dir.conf`
+
+- clear everything and paste this in: 
+
+```
+<IfModule mod_dir.c>
+        #Change this:
+        #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+        #To this:
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+```
+- After saving and closing the file, you will need to reload Apache so the changes take effect:
+
+`sudo systemctl reload apache2`
+
+- Create a new file named index.php inside your custom web root folder:
+
+`vim /var/www/projectlamp/index.php`
+
+- This will open a blank file. Add the following text inside the file:
+
+```
+<?php
+phpinfo();
+```
+
+- When you are finished, save and close the file, refresh the page and you will see a page similar to this:
+
+![Alt text](images/php%20page.png)
+
+# Congratulations!!! Our PHP installation is working as expected
+
+This page provides information about your server from the perspective of PHP. It is useful for debugging and to ensure that your settings are being applied correctly.
+
+- After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment -and your Ubuntu server. You can use rm to do so:
+
+`sudo rm /var/www/projectlamp/index.php`
+
+You can always recreate this page if you need to access the information again later.
 
 
+## Bonus Step
 
+### Now stop or terminate your instance and any other resources to avoid additional charges.
+
+![Alt text](images/stopped%20instance.png)
+
+# Goodluck!
