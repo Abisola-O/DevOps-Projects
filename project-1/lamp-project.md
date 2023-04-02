@@ -130,8 +130,100 @@ Great! MySQL server is now installed and secured. In the next step, we will inst
 
 ## Step 4 - Installing PHP 
 
+*We now have Apache installed to serve our content and MySQL installed to store and manage our data.* 
+
+*PHP is the component of our setup that will process code to display dynamic content to the end user. In addition to the php package, you’ll need php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases. You’ll also need libapache2-mod-php to enable Apache to handle PHP files. Core PHP packages will automatically be installed as dependencies.*
+
+- To install these 3 packages at once, run:
+
+`sudo apt install php libapache2-mod-php php-mysql`
+
+- Once the installation is finished, we need to confirm our PHP version by running: `php -v`
+
+![Alt text](images/php%20-v.png)
+
+At this point, your LAMP stack is completely installed and fully operational.
+
+- Linux (Ubuntu)
+- Apache HTTP Server
+- MySQL
+- PHP
+
+*We are not done yet though, we have just a few more steps to go*
+
 ## Step 5 - Creating a virtual host for our website using apache
 
+In this step, you will set up a domain called ***projectlamp***, but you can replace this with any domain of your choice.
+
+- Create the directory for projectlamp using ‘mkdir’ command as follows:
+
+`sudo mkdir /var/www/projectlamp`
+
+- Next, assign ownership of the directory with your current system user:
+
+`sudo chown -R $USER:$USER /var/www/projectlamp`
+
+- Create and open a new configuration file in Apache’s sites-available directory using your preferred command-line editor.
+
+`sudo vi /etc/apache2/sites-available/projectlamp.conf`
+
+- This will create a new blank file. Paste in the following bare-bones configuration by hitting on i on the keyboard to enter the insert mode, and paste the text:
+
+``` 
+<VirtualHost *:80>
+    ServerName projectlamp
+    ServerAlias www.projectlamp 
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/projectlamp
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+- To save and close the file, hit the escape button, type: **:wq**, then hit enter.
+
+- We can use the ls command to show the new file in the sites-available directory
+
+`sudo ls /etc/apache2/sites-available`
+
+- You can now use a2ensite command to enable the new virtual host:
+
+`sudo a2ensite projectlamp`
+
+*You might want to disable the default website that comes installed with Apache. This is required if you’re not using a custom domain name, because in this case Apache’s default configuration would overwrite your virtual host.* 
+
+- To disable Apache’s default website use a2dissite command, type:
+
+`sudo a2dissite 000-default`
+
+- To make sure your configuration file doesn’t contain syntax errors, run:
+
+`sudo apache2ctl configtest`
+
+- Finally, reload Apache so these changes take effect:
+
+`sudo systemctl reload apache2`
+
+![Alt text](images/php%204.png)
+
+*Our new website is now active, but the web root /var/www/projectlamp is still empty.* 
+
+- Lets create an index.html file in that location so that we can test that the virtual host works as expected:
+
+`sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html`
+
+- Now let's go to our browser and try to open our website URL using IP address:
+
+`http://<Public-IP-Address>:80`
+
+You should see somthing like this:
+
+![Alt text](images/browser.png)
+
+*You can leave this file in place as a temporary landing page for your application until you set up an index.php file to replace it. Once you do that, remember to remove or rename the index.html file from your document root, as it would take precedence over an index.php file by default.*
+
 ## Step 6 - Enabling PHP on the website 
+
+
 
 
