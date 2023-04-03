@@ -148,7 +148,23 @@ Our MySQL server is now installed and secured. Next, we will install PHP, the fi
 
 ### STEP 4 - INSTALLING PHP
 
+We now have Nginx installed to serve our content and MySQL installed to store and manage our data. Now we can install PHP to process code and generate dynamic content for the web server.
+
+We’ll need to install php-fpm, which stands for “PHP fastCGI process manager”, and tell Nginx to pass PHP requests to this software for processing. Additionally, we’ll need php-mysql - a PHP module that allows PHP to communicate with MySQL-based databases. Core PHP packages will automatically be installed as dependencies.
+
+- To install these 2 packages at once, run:
+
+`sudo apt install php-fpm php-mysql`
+
+- When prompted, type Y and press ENTER to confirm installation.
+
+![Alt text](images/install%20packages.png)
+
+We now have our PHP components installed. Next, we will configure Nginx to use them.
+
 ### STEP 5 - CONFIGURING NGINX TO USE PHP PROCESSOR
+
+
 
 ### STEP 6 - TESTING PHP WITH NGINX
 
