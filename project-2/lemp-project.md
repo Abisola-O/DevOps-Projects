@@ -89,14 +89,67 @@ Now it is time for us to test how our Nginx server can respond to requests from 
 
 Great! Our web server is now correctly installed and accessible through our firewall.
 
-### STEP 2 - INSTALLING MYSQL
+### STEP 3 - INSTALLING MYSQL
+
+Now that we have a web server up and running, we need to install a Database Management System (DBMS) to be able to store and manage data for our site in a relational database. 
+
+MySQL is a popular relational database management system used within PHP environments, so we will use it in our project.
+
+- We will use *apt* to acquire and install this software. Run : `sudo apt install mysql-server`
+
+- When prompted, confirm installation by typing Y, and then hit ENTER.
+
+![Alt text](images/sudo%20install.png)
+
+- When the installation is finished, log in to the MySQL console by typing: `sudo mysql`
+
+This will connect to the MySQL server as the administrative database user root, which is inferred by the use of sudo when running this command. 
+
+You should see an output like this:
+
+![Alt text](images/sudo%20mysql.png)
+
+*It’s recommended that you run a security script that comes pre-installed with MySQL. This script will remove some insecure default settings and lock down access to your database system. Before running the script, you will set a password for the root user, using mysql_native_password as default authentication method. We’re defining this user’s password as PassWord.1.*
+
+- Run: `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';`
+
+- Exit the MySQL shell with: `exit`
+
+![Alt text](images/alter%20user.png)
+
+- Start the interactive script by running: `sudo mysql_secure_installation`
+
+This will ask if you want to configure the VALIDATE PASSWORD PLUGIN.
+
+**Note:** *Enabling this feature is something of a judgment call. If enabled, passwords which don’t match the specified criteria will be rejected by MySQL with an error. It is safe to leave validation disabled, but you should always use strong, unique passwords for database credentials.*
+
+- Answer Y for yes, or anything else to continue without enabling.
+
+![Alt text](images/secure%20installation.png)
+
+*If you answer “yes”, you’ll be asked to select a level of password validation.*
+
+-  If you enabled password validation, you’ll be shown the password strength for the root password you just entered and your server will ask if you want to continue with that password. If you are happy with your current password, enter Y for “yes” at the prompt:
+
+![Alt text](images/password%20validation.png)
+
+- For the rest of the questions, press Y and hit the ENTER key at each prompt. This will prompt you to change the root password, remove some anonymous users and the test database, disable remote root logins. Load these new rules so that MySQL immediately respects the changes you have made.
+
+![Alt text](images/reloading%20.png)
+
+- When you’re finished, test if you’re able to log in to the MySQL console by typing: `sudo mysql -p`
+
+- Exit the MySQL console
+
+![Alt text](images/mysql-p.png)
+
+Our MySQL server is now installed and secured. Next, we will install PHP, the final component in the LEMP stack.
 
 
+### STEP 4 - INSTALLING PHP
 
-### STEP 3 - INSTALLING PHP
+### STEP 5 - CONFIGURING NGINX TO USE PHP PROCESSOR
 
-### STEP 4 - CONFIGURING NGINX TO USE PHP PROCESSOR
+### STEP 6 - TESTING PHP WITH NGINX
 
-### STEP 5 - TESTING PHP WITH NGINX
-
-### STEP 6 - RETRIEVING DATA FROM MYSQL DATABASE WITH PHP
+### STEP 7 - RETRIEVING DATA FROM MYSQL DATABASE WITH PHP
