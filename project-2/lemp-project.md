@@ -30,9 +30,50 @@ To do this project, we need the following:
 
 `ssh -i <private-key-name>.pem ubuntu@<Public-IP-address>`
 
+![Alt text](images/connected%20instance.png)
+
 Great! We've just launched our instance and connected to it.
 
 ### STEP 1 - INSTALLING THE NGINX WEB SERVER
+
+We'll be using the *apt* package manager to install our Nginx package. 
+
+- firstly, we'll start off by updating our server's package index with: `sudo apt update`
+- Now we can install Nginx with: `sudo apt install nginx`
+- When prompted, enter Y to confirm that you want to install Nginx
+
+Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
+
+- To verify that nginx was successfully installed and is running as a service in Ubuntu, run:
+
+`sudo systemctl status nginx`
+
+If it is green and running, then you did everything correctly – you have just launched your first Web Server in the Clouds!
+
+However, before we can eceive any traffic by our Web Server, we need to open TCP port 80 which is default port that web browsers use to access web pages in the Internet.
+
+- To do this, we need to go back to our AWS console and add a rule to our EC2 instance configuration to open inbound connection through port 80
+
+Our server is running and we can access it locally and from the Internet
+
+- First, let us try to check how we can access it locally in our Ubuntu shell, run:
+
+```
+curl http://localhost:80
+or
+curl http://127.0.0.1:80
+```
+
+Either of the command should output something like this: 
+
+Now it is time for us to test how our Nginx server can respond to requests from the Internet.
+- Open a web browser of your choice and try to access following url
+`http://<Public-IP-Address>:80`
+
+*Another way to retrieve your Public IP address, other than to check it in AWS Web console, is to use following command:*
+
+`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
+
 
 ### STEP 2 - INSTALLING MYSQL
 
