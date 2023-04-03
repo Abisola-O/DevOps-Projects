@@ -34,13 +34,15 @@ To do this project, we need the following:
 
 Great! We've just launched our instance and connected to it.
 
-### STEP 1 - INSTALLING THE NGINX WEB SERVER
+### STEP 2 - INSTALLING THE NGINX WEB SERVER
 
 We'll be using the *apt* package manager to install our Nginx package. 
 
 - firstly, we'll start off by updating our server's package index with: `sudo apt update`
 - Now we can install Nginx with: `sudo apt install nginx`
 - When prompted, enter Y to confirm that you want to install Nginx
+
+![Alt text](images/sudo%20install%20nginx.png)
 
 Once the installation is finished, the Nginx web server will be active and running on your Ubuntu 20.04 server.
 
@@ -50,9 +52,13 @@ Once the installation is finished, the Nginx web server will be active and runni
 
 If it is green and running, then you did everything correctly – you have just launched your first Web Server in the Clouds!
 
-However, before we can eceive any traffic by our Web Server, we need to open TCP port 80 which is default port that web browsers use to access web pages in the Internet.
+![Alt text](images/systemctl.png)
 
-- To do this, we need to go back to our AWS console and add a rule to our EC2 instance configuration to open inbound connection through port 80
+However, before we can receive any traffic by our Web Server, we need to open TCP port 80 which is default port that web browsers use to access web pages in the Internet.
+
+- To do this, we need to go back to our AWS console and add a rule to our EC2 instance configuration to open inbound connection through port 80.
+
+![Alt text](images/inbound%20rules.png)
 
 Our server is running and we can access it locally and from the Internet
 
@@ -64,18 +70,28 @@ or
 curl http://127.0.0.1:80
 ```
 
-Either of the command should output something like this: 
+Either of the command should output this: 
+
+![Alt text](images/curl-80.png)
 
 Now it is time for us to test how our Nginx server can respond to requests from the Internet.
-- Open a web browser of your choice and try to access following url
+- Open a web browser of your choice and input the following url:
+
 `http://<Public-IP-Address>:80`
+
+![Alt text](images/nginx%20welcome%20page.png)
 
 *Another way to retrieve your Public IP address, other than to check it in AWS Web console, is to use following command:*
 
 `curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
 
+![Alt text](images/curl-meta-data.png)
+
+Great! Our web server is now correctly installed and accessible through our firewall.
 
 ### STEP 2 - INSTALLING MYSQL
+
+
 
 ### STEP 3 - INSTALLING PHP
 
