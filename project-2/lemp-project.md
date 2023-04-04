@@ -164,8 +164,91 @@ We now have our PHP components installed. Next, we will configure Nginx to use t
 
 ### STEP 5 - CONFIGURING NGINX TO USE PHP PROCESSOR
 
+*When using the Nginx web server, we can create server blocks (similar to virtual hosts in Apache) to encapsulate configuration details and host more than one domain on a single server. In this guide, we will use **project LEMP** as an example domain name.*
+
+*On Ubuntu 20.04, Nginx has one server block enabled by default and is configured to serve documents out of a directory at /var/www/html. While this works well for a single site, it can become difficult to manage if you are hosting multiple sites. Instead of modifying /var/www/html, we’ll create a directory structure within /var/www for our domain website, leaving /var/www/html in place as the default directory to be served if a client request does not match any other sites.*
+
+
+
+- Create the root web directory for your domain as follows:
+
+    `sudo mkdir /var/www/projectLEMP`
+
+- Assign ownership of the directory with the $USER environment variable, which will reference your current system user:
+
+    `sudo chown -R $USER:$USER /var/www/projectLEMP`
+
+- Now, open a new configuration file in Nginx’s sites-available directory using your preferred command-line editor. Here, we’ll use vi/vim:
+
+    `sudo vi /etc/nginx/sites-available/projectLEMP`
+
+- This will create a new blank file. Paste in the following bare-bones configuration:
+
+```
+#/etc/nginx/sites-available/projectLEMP
+ 
+server {
+	listen 80;
+	server_name projectLEMP www.projectLEMP;
+	root /var/www/projectLEMP;
+ 
+	index index.html index.htm index.php;
+ 
+	location / {
+    	try_files $uri $uri/ =404;
+	}
+ 
+	location ~ \.php$ {
+    	include snippets/fastcgi-php.conf;
+    	fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+ 	}
+ 
+	location ~ /\.ht {
+    	deny all;
+	}
+ 
+}
+```
+
+- Activate your configuration by linking to the config file from Nginx’s sites-enabled directory:
+
+    `sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/`
+
+- You can test your configuration for syntax errors by typing: `sudo nginx -t`
+
+You should see the following messages: 
+
+![Alt text](images/nginx%20-t.png)
+
+- We also need to disable default Nginx host that is currently configured to listen on port 80, for this run:
+
+    `sudo unlink /etc/nginx/sites-enabled/default`
+
+-  Reload Nginx to apply the changes: `sudo systemctl reload nginx`
+
+- Our new website is now active, but the web root /var/www/projectLEMP is still empty. Create an index.html file in that location so that we can test that the new server block works as expected:
+
+    `sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html`
+
+- Now go to your browser and try to open your website URL using IP address:
+
+    `http://<Public-IP-Address>:80`
+
+![Alt text](images/echo%20hello%20LEMP.png)
+
+- You can also access your website in your browser by public DNS name, the result is the same: 
+
+    `http://<Public-DNS-Name>:80`
+
+![Alt text](images/public%20dns.png)
+
+*If you see the text from ‘echo’ command you wrote to index.html file, then it means your Nginx site is working as expected.*
+
+*We are going to leave this file in place as a temporary landing page for our application until we set up an index.php file to replace it*
 
 
 ### STEP 6 - TESTING PHP WITH NGINX
+
+
 
 ### STEP 7 - RETRIEVING DATA FROM MYSQL DATABASE WITH PHP
