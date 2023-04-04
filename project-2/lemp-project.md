@@ -297,7 +297,7 @@ CREATE DATABASE `example_database`;
 
 Now you can create a new user and grant him full privileges on the database you have just created.
 
-- The following command creates a new user named example_user, using mysql_native_password as default authentication method. We’re defining this user’s password as **password**, but you should replace this value with a secure password of your own choosing.
+- The following command creates a new user named example_user, using mysql_native_password as default authentication method. We’re defining this user’s password as **password**t , but you should replace this value with a secure password of your own choosing.
 
 ```
 CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
@@ -331,9 +331,13 @@ CREATE TABLE example_database.todo_list (
 );
 ```
 
+![Alt text](images/todo_list.png)
+
 Insert a few rows of content in the test table. You might want to repeat the next command a few times, using different VALUES:
 
 `INSERT INTO example_database.todo_list (content) VALUES ("My first important item");`
+
+![Alt text](images/insert%20lists.png)
 
 To confirm that the data was successfully saved to your table, run:
 
@@ -341,13 +345,15 @@ To confirm that the data was successfully saved to your table, run:
 
 You’ll see the following output:
 
-After confirming that you have valid data in your test table, you can exit the MySQL console.
+![Alt text](images/important%20items.png)
 
-Now you can create a PHP script that will connect to MySQL and query for your content. Create a new PHP file in your custom web root directory using your preferred editor. We’ll use vi for that:
+- After confirming that you have valid data in your test table, you can exit the MySQL console.
+
+- Now you can create a PHP script that will connect to MySQL and query for your content. Create a new PHP file in your custom web root directory using your preferred editor. We’ll use vi for that:
 
 `vi /var/www/projectLEMP/todo_list.php`
 
-Copy this content into your todo_list.php script:
+- Copy this content into your todo_list.php script:
 
 ```
 <?php
